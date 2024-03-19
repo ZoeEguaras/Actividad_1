@@ -10,10 +10,38 @@ total_failures = 0
 # Lista para almacenar las letras adivinadas
 guessed_letters = []
 
+# Se elije la dificultad
+while True:
+    print("Elige una dificultad:")
+    print("1. Fácil")
+    print("2. Media")
+    print("3. Difícil")
+    option = int(input())
+
+    if option in [1, 2, 3]:
+        break
+    else: 
+        print("Opción no válida. Intente de nuevo.")
+
+# Acorde a lo elegido se establecen las letras a mostrar
+if option == 1:
+    word_displayed = ""
+    for letter in secret_word:
+        if letter in "aeiou":
+            word_displayed += letter
+            guessed_letters.append(letter)
+        else:
+            word_displayed += "_"
+elif option == 2:
+    word_displayed = secret_word[0] + '_' * (len(secret_word) - 2) + secret_word[-1]
+    guessed_letters.append(secret_word[0])
+    guessed_letters.append(secret_word[-1])
+else:
+    word_displayed = "_" * len(secret_word)
+
 print("¡Bienvenido al juego de adivinanzas!")
 print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
 
-word_displayed = "_" * len(secret_word)
 # Mostrar la palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
 
