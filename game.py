@@ -14,7 +14,7 @@ print("¡Bienvenido al juego de adivinanzas!")
 print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
 
 word_displayed = "_" * len(secret_word)
-# Mostrarla palabra parcialmente adivinada
+# Mostrar la palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
 
 for i in range(max_attempts):
@@ -23,6 +23,14 @@ for i in range(max_attempts):
      # Verificar si la letra ya ha sido adivinada
      if letter in guessed_letters:
          print("Ya has intentado con esa letra. Intenta con otra.")
+         continue
+     # Verificar si el usuario ingresó un caracter correcto
+     if not letter.isalpha():
+         print("No has ingresado una letra. Inténtalo de nuevo.")
+         continue
+     # EXTRA: Verificar si el usuario ingresó más de una letra
+     if len(letter) != 1:
+         print("Has ingresado más de una letra. Intenta ingresando solo una.")
          continue
      # Agregar la letra a la lista de letras adivinadas
      guessed_letters.append(letter)
