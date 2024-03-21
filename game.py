@@ -5,39 +5,48 @@ words = ["python", "programación", "computadora", "código", "desarrollo",
 
 # Elegir una palabra al azar
 secret_word = random.choice(words)
-# Inicializo el número de fallos 
+# Inicializar el número de fallos 
 total_failures = 0
 # Lista para almacenar las letras adivinadas
 guessed_letters = []
 
-# Se elije la dificultad
+# El usuario elige la dificultad
 while True:
     print("Elige una dificultad:")
     print("1. Fácil")
     print("2. Media")
     print("3. Difícil")
-    option = int(input())
-
-    if option in [1, 2, 3]:
+    option = input()
+    
+    # El bucle se rompe SOLO si se ingresa un número válido
+    if option in ['1', '2', '3']:
+        option = int(option)
         break
-    else: 
+    else:
         print("Opción no válida. Intente de nuevo.")
 
-# Acorde a lo elegido se establecen las letras a mostrar
-if option == 1:
-    word_displayed = ""
-    for letter in secret_word:
-        if letter in "aeiou":
-            word_displayed += letter
-            guessed_letters.append(letter)
-        else:
-            word_displayed += "_"
-elif option == 2:
-    word_displayed = secret_word[0] + '_' * (len(secret_word) - 2) + secret_word[-1]
-    guessed_letters.append(secret_word[0])
-    guessed_letters.append(secret_word[-1])
-else:
-    word_displayed = "_" * len(secret_word)
+match option:
+    case 1:
+        # Revelar las vocales
+        word_displayed = ""
+        for letter in secret_word:
+            if letter in "aeiou":
+                word_displayed += letter
+                guessed_letters.append(letter)
+            else:
+                word_displayed += "_"
+    case 2:
+        # Revelar la primera y la úiltima letra (con todas sus ocurrencias)
+        word_displayed = ""
+        for letter in secret_word:
+            if letter in (secret_word[0], secret_word[-1]):
+                word_displayed += letter
+                guessed_letters.append(letter)
+            else:
+                word_displayed += "_"
+    case 3:
+        # No revelar nada
+        word_displayed = "_" * len(secret_word)
 
 print("¡Bienvenido al juego de adivinanzas!")
 print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
@@ -50,7 +59,7 @@ while total_failures < 10:
      letter = input("Ingresa una letra: ").lower()
      # Verificar si la letra ya ha sido adivinada
      if letter in guessed_letters:
-         print("Ya has intentado con esa letra. Intenta con otra.")
+         print("Esa letra ya fue revelada. Intenta con otra.")
          continue
      # Verificar si el usuario ingresó un caracter correcto
      if not letter.isalpha():
@@ -79,7 +88,7 @@ while total_failures < 10:
      print(f"Palabra: {word_displayed}")
      # Verificar si se ha adivinado la palabra completa
      if word_displayed == secret_word:
-         print(f"¡Felicidades! Has adivinado la palabra secreta:  {secret_word}")
+         print(f"¡Felicidades! Has adivinado la palabra secreta: {secret_word}")
          break
 else:
      print(f"¡Oh no! Has cometido demasiados fallos ({total_failures}).")
